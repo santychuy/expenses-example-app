@@ -1,11 +1,20 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router';
+import {
+  createRootRouteWithContext,
+  Link,
+  Outlet
+} from '@tanstack/react-router';
+import { type QueryClient } from '@tanstack/react-query';
 // import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
+interface RouteContext {
+  queryClient: QueryClient;
+}
+
 // Kind of the main layout
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouteContext>()({
   component: () => (
     <>
-      <div className="p-2 flex gap-2">
+      <div className="flex gap-2 p-2">
         <Link to="/" className="[&.active]:font-bold cursor-pointer">
           Home
         </Link>{' '}
@@ -17,6 +26,9 @@ export const Route = createRootRoute({
         </Link>
         <Link to="/add-expense" className="[&.active]:font-bold cursor-pointer">
           Add
+        </Link>
+        <Link to="/profile" className="[&.active]:font-bold cursor-pointer">
+          Profile
         </Link>
       </div>
       <hr />

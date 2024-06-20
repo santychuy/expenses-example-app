@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { zValidator } from '@hono/zod-validator';
 
 import { type Expense, createExpenseSchema } from '../validations/expenses';
+import { authUser } from '../middlewares/auth';
 
 let fakeExpenses: Expense[] = [
   { id: 1, title: 'Expense 1', amount: 10 },
@@ -10,8 +11,8 @@ let fakeExpenses: Expense[] = [
 ];
 
 export const expensesRoutes = new Hono()
-  .get('/', (c) => c.json({ expenses: fakeExpenses }))
-  .get('/:id{[0-9]+}', (c) => {
+  .get('/', authUser, (c) => c.json({ expenses: fakeExpenses }))
+  .get('/:id{[0-9]+}', authUser, (c) => {
     const id = Number.parseInt(c.req.param('id'));
     const fakeExpense = fakeExpenses.find((expense) => expense.id === id);
 
@@ -21,19 +22,19 @@ export const expensesRoutes = new Hono()
 
     return c.json({ expense: fakeExpense });
   })
-  .get('/total', (c) => {
+  .get('/total', authUser, (c) => {
     const total = fakeExpenses.reduce((acc, { amount }) => acc + amount, 0);
 
     return c.json({ total });
   })
-  .post('/', zValidator('json', createExpenseSchema), async (c) => {
+  .post('/', authUser, zValidator('json', createExpenseSchema), async (c) => {
     const expense = c.req.valid('json');
 
     fakeExpenses.push({ ...expense, id: fakeExpenses.length + 1 });
 
     return c.json(expense, 201);
   })
-  .delete('/:id{[0-9]+}', (c) => {
+  .delete('/:id{[0-9]+}', authUser, (c) => {
     const id = Number.parseInt(c.req.param('id'));
 
     const newFakeExpenses = fakeExpenses.filter((expense) => expense.id !== id);
