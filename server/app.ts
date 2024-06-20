@@ -8,10 +8,14 @@ const app = new Hono();
 
 app.use('*', logger());
 
-app.get('/api/health', (c) => c.json({ message: 'Ok' }));
-app.route('/api/expenses', expensesRoutes);
+const apiRoutes = app
+  .basePath('/api')
+  .get('/health', (c) => c.json({ message: 'Ok' }))
+  .route('/expenses', expensesRoutes);
 
 app.get('*', serveStatic({ root: './frontend/dist' }));
 app.get('*', serveStatic({ path: './frontend/dist/index.html' }));
+
+export type apiRoutes = typeof apiRoutes;
 
 export default app;
