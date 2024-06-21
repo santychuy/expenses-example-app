@@ -5,11 +5,15 @@
   "scripts": {
     "start": "bun server/index.ts",
     "dev": "bun --watch server/index.ts",
-    "deploy": "fly deploy"
+    "deploy": "fly deploy",
+    "dev:studio": "bunx drizzle-kit studio",
+    "migration:gen": "bun drizzle-kit generate",
+    "migration:run": "bun migrate.ts"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.7",
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "drizzle-kit": "0.22.7"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
@@ -17,7 +21,9 @@
   "dependencies": {
     "@hono/zod-validator": "^0.2.2",
     "@kinde-oss/kinde-typescript-sdk": "2.9.1",
+    "drizzle-orm": "0.31.2",
     "hono": "^4.4.7",
+    "postgres": "3.4.4",
     "zod": "^3.23.8"
   }
 }

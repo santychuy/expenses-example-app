@@ -74,7 +74,7 @@ function Expenses() {
                 <Skeleton className="w-[30px] h-[10px]" />
               ) : (
                 `$${expenses?.reduce(
-                  (acc, expense) => acc + expense.amount,
+                  (acc, expense) => acc + +expense.amount,
                   0
                 )}`
               )}

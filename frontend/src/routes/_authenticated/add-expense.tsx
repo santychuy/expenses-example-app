@@ -19,10 +19,8 @@ function AddExpense() {
       amount: ''
     },
     onSubmit: async ({ value }) => {
-      await new Promise((resolve) => setTimeout(resolve, 3000));
-
       const res = await api.expenses.$post({
-        json: { amount: Number(value.amount), title: value.title }
+        json: { ...value }
       });
 
       if (!res.ok) {
