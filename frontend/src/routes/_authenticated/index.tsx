@@ -28,7 +28,7 @@ function Home() {
   if (error) return <p>Error occurred: {error.message}</p>;
 
   return (
-    <main className="h-[calc(100vh-41px)] grid place-items-center mx-auto max-w-screen-md">
+    <main className="h-[calc(100vh-75px)] grid place-items-center mx-auto max-w-screen-md">
       <Card className="w-full max-w-[350px]">
         <CardHeader>
           <CardTitle>Total Spent</CardTitle>

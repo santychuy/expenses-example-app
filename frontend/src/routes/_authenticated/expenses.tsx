@@ -38,6 +38,7 @@ function Expenses() {
           <TableRow className="text-base">
             <TableHead className="w-[150px]">ID</TableHead>
             <TableHead>Title</TableHead>
+            <TableHead>Date Registered</TableHead>
             <TableHead className="w-[200px]">Amount</TableHead>
           </TableRow>
         </TableHeader>
@@ -56,17 +57,18 @@ function Expenses() {
             </TableRow>
           )}
           {!isFetching &&
-            expenses?.map(({ id, amount, title }) => (
+            expenses?.map(({ id, amount, title, date }) => (
               <TableRow>
                 <TableCell className="font-medium">{id}</TableCell>
                 <TableCell>{title}</TableCell>
+                <TableCell>{date}</TableCell>
                 <TableCell>${amount}</TableCell>
               </TableRow>
             ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={2} className="font-bold" height={60}>
+            <TableCell colSpan={3} className="font-bold" height={60}>
               Total
             </TableCell>
             <TableCell className="font-bold">
