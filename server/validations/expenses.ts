@@ -1,11 +1,7 @@
-import { z } from 'zod';
+import { insertExpenseSchema } from '../db/schema/expenses';
 
-const expenseSchema = z.object({
-  id: z.number().int().positive().min(1),
-  title: z.string().min(6, 'The title needs to be a minimum of 6 characters'),
-  amount: z.string()
+// Shared Zod Schema for frontend and backend
+export const createExpenseSchema = insertExpenseSchema.omit({
+  userId: true,
+  createdAt: true
 });
-
-export const createExpenseSchema = expenseSchema.omit({ id: true });
-
-export type Expense = z.infer<typeof expenseSchema>;

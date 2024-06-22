@@ -5,7 +5,10 @@ import { eq, desc, and } from 'drizzle-orm';
 import { createExpenseSchema } from '../validations/expenses';
 import { authUser } from '../middlewares/auth';
 import { db } from '../db';
-import { expenses as expensesTable } from '../db/schema/expenses';
+import {
+  expenses as expensesTable,
+  insertExpenseSchema
+} from '../db/schema/expenses';
 
 export const expensesRoutes = new Hono()
   .get('/', authUser, async (c) => {
@@ -51,12 +54,14 @@ export const expensesRoutes = new Hono()
   .post('/', authUser, zValidator('json', createExpenseSchema), async (c) => {
     const expense = c.req.valid('json');
 
+    const validatedExpense = insertExpenseSchema.parse({
+      ...expense,
+      userId: c.var.user.id
+    });
+
     const res = await db
       .insert(expensesTable)
-      .values({
-        ...expense,
-        userId: c.var.user.id
-      })
+      .values(validatedExpense)
       .returning();
 
     return c.json(res, 201);
