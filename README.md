@@ -10,12 +10,24 @@ The main goal is to use a **modern stack** on technologies used on the backend a
 
 To install dependencies:
 
+- Server
+
 ```bash
 bun install
 ```
 
-To run:
+- Frontend
 
 ```bash
-bun run index.ts
+cd frontend && bun install
+```
+
+To run separate terminals:
+
+```bash
+bun dev
+```
+
+```bash
+cd frontend && bun dev
 ```
