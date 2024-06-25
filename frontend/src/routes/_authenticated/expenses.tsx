@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { createFileRoute } from '@tanstack/react-router';
 
-import { getExpenses } from '@/api/expenses';
+import { getAllExpensesQueryOptions } from '@/lib/api';
 import {
   Table,
   TableBody,
@@ -22,10 +22,7 @@ function Expenses() {
     data: expenses,
     isFetching,
     error
-  } = useQuery({
-    queryKey: ['expenses'],
-    queryFn: getExpenses
-  });
+  } = useQuery(getAllExpensesQueryOptions);
 
   if (error) return <p>Error occurred: {error.message}</p>;
 

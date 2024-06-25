@@ -1,5 +1,6 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 import { useForm } from '@tanstack/react-form';
+import { useQueryClient } from '@tanstack/react-query';
 import { zodValidator } from '@tanstack/zod-form-adapter';
 
 import { api } from '@/lib/api';
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/_authenticated/add-expense')({
 });
 
 function AddExpense() {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   const form = useForm({
@@ -32,6 +34,8 @@ function AddExpense() {
       if (!res.ok) {
         throw new Error(res.statusText);
       }
+
+      queryClient.invalidateQueries({ queryKey: ['expenses'] });
 
       navigate({ to: '/expenses' });
     }
